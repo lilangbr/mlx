@@ -51,6 +51,27 @@ static void draw (t_data *img) //SOH FIZ ISSO!
 	}
 }
 
+static void draw2 (t_data *img) //SOH FIZ ISSO!
+{
+	int x, y, b, g;
+	
+	x = 250;
+	y = 250;
+	b = 255;
+	g = 255;
+
+	while ( y < 350 )
+	{
+		while ( x < 350 )
+		{
+			my_mlx_pixel_put(img, x, y, b + (g << 8) ); //very very slow! 0x00FF0000
+			x = x + 1;
+		}
+		x = 250;
+		y = y + 1;
+		g = g - 2;
+	}
+}
 int	main(void)
 {
 	void	*mlx;
@@ -64,11 +85,12 @@ int	main(void)
 								&img.endian);
 	//my_mlx_pixel_put(&img, 5, 5, 0x00FF0000); //SUBSTITUI AQUI DO TUTORIAL PELA MINHA FUNCAO DRAW
 	draw (&img); // < - MINHA FUNCAO
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+	draw2 (&img);
+    mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 }
 
-/*
+/* Guardar no coração:
 void    put_pixel(t_img *data, int x, int y, int color)
 {
     char    *dst;
