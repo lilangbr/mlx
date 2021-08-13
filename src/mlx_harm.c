@@ -21,15 +21,15 @@ typedef struct	s_data {
 	int		endian;
 }				t_data;
 
-static void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+static void	my_mlx_pixel_put(t_data *data, int x, int y, int color) //because mlx_pp is very very slow
 {
 	char	*dst; //acho q é o meu pixel
 
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8)); //corrijo o endereço? - n é contiguo!
-	*(unsigned int*)dst = color;
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8)); //corrijo o endereço - n é contiguo!
+	*(unsigned int*)dst = color; //endereço na imagem guarda valor da cor (conteudo do endereço é preenchido c valor)
 }
-static void draw (t_data *img) //SOH FIZ ISSO!
+static void draw (t_data *img) //como eu decidi a rota do meu preenchimento
 {
 	int x, y, r, g;
 	
@@ -42,7 +42,7 @@ static void draw (t_data *img) //SOH FIZ ISSO!
 	{
 		while ( x < 250 )
 		{
-			my_mlx_pixel_put(img, x, y, (r << 16) + (g << 8) ); //very very slow! 0x00FF0000
+			my_mlx_pixel_put(img, x, y, (r << 16) + (g << 8) ); //0x00FF0000
 			x = x + 1;
 		}
 		x = 150;
@@ -80,7 +80,7 @@ int	main(void)
 
 	mlx = mlx_init();
 	mlx_win = mlx_new_window(mlx, 600, 600, "Vai dar certo! Confia!");
-	img.img = mlx_new_image(mlx, 600, 600);
+	img.img = mlx_new_image(mlx, 600, 600);//init img
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 								&img.endian);
 	//my_mlx_pixel_put(&img, 5, 5, 0x00FF0000); //SUBSTITUI AQUI DO TUTORIAL PELA MINHA FUNCAO DRAW
