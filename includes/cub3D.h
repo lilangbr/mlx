@@ -6,7 +6,7 @@
 /*   By: ebresser <ebresser@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 20:14:07 by ebresser          #+#    #+#             */
-/*   Updated: 2021/08/14 17:38:26 by ebresser         ###   ########.fr       */
+/*   Updated: 2021/08/14 19:40:22 by ebresser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include "../libs/minilibx-linux/mlx.h"
 # include "../libs/minilibx-linux/mlx_int.h"
 # include <errno.h>
+
+# define ESC_KEY 0x00ff1b
 
 typedef struct	s_vars {
 	void	*mlx;
