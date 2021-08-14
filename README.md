@@ -1,7 +1,7 @@
 # mlx
 
 
-<h2>esquema </h2>
+<h2>Understanding the Minilibx</h2>
 
 ![schema](mlx1.png)
 
