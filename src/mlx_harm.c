@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.c                                            :+:      :+:    :+:   */
+/*   mlx_harm.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebresser <ebresser@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 20:12:37 by ebresser          #+#    #+#             */
-/*   Updated: 2021/08/10 22:16:00 by ebresser         ###   ########.fr       */
+/*   Updated: 2021/08/13 22:31:24 by ebresser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,23 @@ typedef struct	s_data {
 	int		endian;
 }				t_data;
 
+static int	create_trgb(int t, int r, int g, int b)
+{
+	return (t << 24 | r << 16 | g << 8 | b);	
+}
+
+static int	get_opposite(int t, int r, int g, int b)
+{
+	
+	int ro, go, bo;
+
+	ro = g / 2 + b / 2;
+	go = r / 2 + b / 2;	
+	bo = r / 2 + g / 2;
+
+	return (create_trgb(t, ro, go, bo));
+}
+
 static void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst; //acho q é o meu pixel
@@ -31,40 +48,45 @@ static void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 }
 static void draw (t_data *img) //SOH FIZ ISSO!
 {
-	int x, y, r, g;
+	int x, y, r, g, b, t;
 	
 	x = 150;
 	y = 150;
 	r = 255;
 	g = 255;
+	b = 0;
+	t = 255; //Ja coloquei 0, 100, etc, nada altera!!!!! Buglix
 
 	while ( y < 250 )
 	{
 		while ( x < 250 )
 		{
-			my_mlx_pixel_put(img, x, y, (r << 16) + (g << 8) ); //very very slow! 0x00FF0000
+			my_mlx_pixel_put(img, x, y, create_trgb(t, r, g, b) ); //0x00FF0000
 			x = x + 1;
 		}
 		x = 150;
 		y = y + 1;
 		g = g - 2;
+		//t = t - 10;
 	}
 }
 
 static void draw2 (t_data *img) //SOH FIZ ISSO!
 {
-	int x, y, b, g;
+	int x, y, t, r, b, g;
 	
 	x = 250;
 	y = 250;
+	r = 0;
 	b = 255;
 	g = 255;
+	t = 0;
 
 	while ( y < 350 )
 	{
 		while ( x < 350 )
 		{
-			my_mlx_pixel_put(img, x, y, b + (g << 8) ); //very very slow! 0x00FF0000
+			my_mlx_pixel_put(img, x, y, create_trgb(t, r, g, b) ); //very very slow! 0x00FF0000
 			x = x + 1;
 		}
 		x = 250;
@@ -72,6 +94,40 @@ static void draw2 (t_data *img) //SOH FIZ ISSO!
 		g = g - 2;
 	}
 }
+
+static void draw_opposite (t_data *img) //SOH FIZ ISSO!
+{
+	int x, y, t, r, b, g;
+	
+	x = 350;
+	y = 150;
+	r = 255;
+	b = 0;
+	g = 255;
+	t = 0;
+
+	while ( y < 200 )
+	{
+		while ( x < 450 )
+		{
+			my_mlx_pixel_put(img, x, y, create_trgb(t, r, g, b) ); //very very slow! 0x00FF0000
+			x = x + 1;
+		}
+		x = 350;
+		y = y + 1;		
+	}
+	while ( y < 250 )
+	{
+		while ( x < 450 )
+		{
+			my_mlx_pixel_put(img, x, y, get_opposite(t, r, g, b) ); //very very slow! 0x00FF0000
+			x = x + 1;
+		}
+		x = 350;
+		y = y + 1;		
+	}
+}
+
 int	main(void)
 {
 	void	*mlx;
@@ -86,6 +142,7 @@ int	main(void)
 	//my_mlx_pixel_put(&img, 5, 5, 0x00FF0000); //SUBSTITUI AQUI DO TUTORIAL PELA MINHA FUNCAO DRAW
 	draw (&img); // < - MINHA FUNCAO
 	draw2 (&img);
+	draw_opposite (&img);
     mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 }
