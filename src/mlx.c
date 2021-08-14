@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_harm.c                                         :+:      :+:    :+:   */
+/*   bkup.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebresser <ebresser@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 20:12:37 by ebresser          #+#    #+#             */
-/*   Updated: 2021/08/13 22:31:24 by ebresser         ###   ########.fr       */
+/*   Updated: 2021/08/14 12:18:28 by ebresser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ typedef struct	s_data {
 	int		endian;
 }				t_data;
 
-<<<<<<< HEAD
 static int	create_trgb(int t, int r, int g, int b)
 {
 	return (t << 24 | r << 16 | g << 8 | b);	
@@ -39,10 +38,8 @@ static int	get_opposite(int t, int r, int g, int b)
 	return (create_trgb(t, ro, go, bo));
 }
 
-static void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-=======
+
 static void	my_mlx_pixel_put(t_data *data, int x, int y, int color) //because mlx_pp is very very slow
->>>>>>> 4bc5e9c96dbbcfe5be288abb2947d7d61f5ca0a9
 {
 	char	*dst; //acho q é o meu pixel
 
@@ -50,7 +47,7 @@ static void	my_mlx_pixel_put(t_data *data, int x, int y, int color) //because ml
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8)); //corrijo o endereço - n é contiguo!
 	*(unsigned int*)dst = color; //endereço na imagem guarda valor da cor (conteudo do endereço é preenchido c valor)
 }
-static void draw (t_data *img) //como eu decidi a rota do meu preenchimento
+static void draw_square1 (t_data *img) //como eu decidi a rota do meu preenchimento
 {
 	int x, y, r, g, b, t;
 	
@@ -65,11 +62,8 @@ static void draw (t_data *img) //como eu decidi a rota do meu preenchimento
 	{
 		while ( x < 250 )
 		{
-<<<<<<< HEAD
 			my_mlx_pixel_put(img, x, y, create_trgb(t, r, g, b) ); //0x00FF0000
-=======
 			my_mlx_pixel_put(img, x, y, (r << 16) + (g << 8) ); //0x00FF0000
->>>>>>> 4bc5e9c96dbbcfe5be288abb2947d7d61f5ca0a9
 			x = x + 1;
 		}
 		x = 150;
@@ -79,7 +73,7 @@ static void draw (t_data *img) //como eu decidi a rota do meu preenchimento
 	}
 }
 
-static void draw2 (t_data *img) //SOH FIZ ISSO!
+static void draw_square2 (t_data *img) //SOH FIZ ISSO!
 {
 	int x, y, t, r, b, g;
 	
@@ -88,7 +82,7 @@ static void draw2 (t_data *img) //SOH FIZ ISSO!
 	r = 0;
 	b = 255;
 	g = 255;
-	t = 0;
+	t = 255;
 
 	while ( y < 350 )
 	{
@@ -102,6 +96,31 @@ static void draw2 (t_data *img) //SOH FIZ ISSO!
 		g = g - 2;
 	}
 }
+static void draw_triangle (t_data *img) //SOH FIZ ISSO!
+{
+	int x, y, t, r, b, g, base, aux;
+	
+	x = 350;
+	y = 350;
+	base = 100;
+	aux = 0;
+	r = 200;
+	b = 100;
+	g = 50;
+	t = 255;
+
+	while ( y < 450 )
+	{
+		x = 350 - aux;
+		while ( x < (350 + aux))
+		{
+			my_mlx_pixel_put(img, x, y, create_trgb(t, r, g, b) ); //very very slow! 0x00FF0000
+			x = x + 1;
+		}
+		y = y + 1;	
+		aux = (y - 350)/2;	
+	}
+}
 
 static void draw_opposite (t_data *img) //SOH FIZ ISSO!
 {
@@ -112,7 +131,7 @@ static void draw_opposite (t_data *img) //SOH FIZ ISSO!
 	r = 255;
 	b = 0;
 	g = 255;
-	t = 0;
+	t = 255;
 
 	while ( y < 200 )
 	{
@@ -148,9 +167,10 @@ int	main(void)
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 								&img.endian);
 	//my_mlx_pixel_put(&img, 5, 5, 0x00FF0000); //SUBSTITUI AQUI DO TUTORIAL PELA MINHA FUNCAO DRAW
-	draw (&img); // < - MINHA FUNCAO
-	draw2 (&img);
+	draw_square1 (&img); // < - MINHA FUNCAO
+	draw_square2 (&img);
 	draw_opposite (&img);
+	draw_triangle (&img);
     mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 }
