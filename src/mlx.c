@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bkup.c                                             :+:      :+:    :+:   */
+/*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebresser <ebresser@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 20:12:37 by ebresser          #+#    #+#             */
-/*   Updated: 2021/08/14 12:18:28 by ebresser         ###   ########.fr       */
+/*   Updated: 2021/08/14 12:50:40 by ebresser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,34 @@ static void draw_square1 (t_data *img) //como eu decidi a rota do meu preenchime
 	}
 }
 
+static void draw_bkgd (t_data *img) //SOH FIZ ISSO!
+{
+	int x, y, t, r, b, g, aux;
+	
+	x = 0;
+	y = 0;
+	r = 10;
+	b = 250;
+	g = 20;
+	t = 255;
+	aux = 0;
+
+	while ( y < 600 )
+	{
+		while ( x < 600 )
+		{
+			my_mlx_pixel_put(img, x, y, create_trgb(t, r, g, b) ); //very very slow! 0x00FF0000
+			x = x + 1;
+		}
+		x = 0;
+		y = y + 1;
+		aux = (y % 10)/6;
+		r = r + aux;
+
+		
+	}
+}
+
 static void draw_square2 (t_data *img) //SOH FIZ ISSO!
 {
 	int x, y, t, r, b, g;
@@ -104,9 +132,9 @@ static void draw_triangle (t_data *img) //SOH FIZ ISSO!
 	y = 350;
 	base = 100;
 	aux = 0;
-	r = 200;
-	b = 100;
-	g = 50;
+	r = 10;
+	b = 40;
+	g = 250;
 	t = 255;
 
 	while ( y < 450 )
@@ -119,6 +147,8 @@ static void draw_triangle (t_data *img) //SOH FIZ ISSO!
 		}
 		y = y + 1;	
 		aux = (y - 350)/2;	
+		b = b + 1;
+		
 	}
 }
 
@@ -167,6 +197,7 @@ int	main(void)
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 								&img.endian);
 	//my_mlx_pixel_put(&img, 5, 5, 0x00FF0000); //SUBSTITUI AQUI DO TUTORIAL PELA MINHA FUNCAO DRAW
+	draw_bkgd (&img);
 	draw_square1 (&img); // < - MINHA FUNCAO
 	draw_square2 (&img);
 	draw_opposite (&img);
