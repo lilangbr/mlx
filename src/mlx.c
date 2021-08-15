@@ -6,7 +6,7 @@
 /*   By: ebresser <ebresser@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 20:12:37 by ebresser          #+#    #+#             */
-/*   Updated: 2021/08/14 20:36:40 by ebresser         ###   ########.fr       */
+/*   Updated: 2021/08/14 21:15:41 by ebresser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,30 +28,24 @@ static void	img_in_heap(t_cub *cub)
 		exit(1);
 }
 
-static int	close_win_esc(int keycode, t_vars *vars)
+static int close_win(t_vars *vars)
+{
+	printf(":::::::::::WINDOW CLOSED!!::::::::::: \n");
+	printf("_______Program still running________\n");
+	mlx_destroy_window(vars->mlx, vars->win); //n precisa desalocar, só fecha a jan. Prog cont
+	return (0);
+
+}
+
+static int	key_pressed(int keycode, t_vars *vars)
 {
 	
 	printf("You've pressed this key: %d (see key_hook) \n", keycode);
-
 	if (keycode == ESC_KEY)
-	{
-		printf(":::::::::::WINDOW CLOSED!!::::::::::: \n");
-		printf("_______Program still running________\n");
-		mlx_destroy_window(vars->mlx, vars->win); //n precisa desalocar, só fecha a jan. Prog cont
-	}
+		close_win (vars);
 	return (0);
 }
-static int	close_win_x(int keycode, t_vars *vars)
-{
-	int a;
 
-	a = keycode;
-	
-	printf(":::::::::::WINDOW CLOSED!!::::::::::: \n");
-	printf("_______Program still running________\n");
-	mlx_destroy_window(vars->mlx, vars->win); //n precisa desalocar, só fecha a jan. Prog cont	
-	return (0);
-}
 int	main(void)
 {
 	t_cub cub;
@@ -73,9 +67,14 @@ int	main(void)
 	//mlx_key_hook(cub.vars->win, key_hook, &(cub.vars)); //função no arg é chamada sempre 
 	//que um evento é disparado. corrigir minim/maximiz com mlx_loop_hook(atualiza a tela)
 	
-	mlx_hook(cub.vars->win, 2, 1L << 0, close_win_esc, cub.vars); //instead of calling mlx_key_hook, 
+	//PAULA
+	//mlx_hook(cub.vars->win, 2, 1L << 0, key_pressed, cub);
+	//mlx_hook(ponteiro_para_janela, numero, máscara, função_para_chamar_quando_coisa_da_mascara_acontecer, parametro_para_enviar_pra_função);
+	//mlx_hook(cub->window_ptr, 2, 1L << 0, key_pressed, cub);
+	//mlx_hook(cub->window_ptr, 3, 1L << 1, key_released, cub);
+	mlx_hook(cub.vars->win, 2, 1L << 0, key_pressed, cub.vars); //instead of calling mlx_key_hook, 
 	//we can also register to the KeyPress and KeyRelease events.
-	mlx_hook(cub.vars->win, 33, 1L << 17, close_win_x, cub.vars); //AQUI DA PAU, PQ??
+	mlx_hook(cub.vars->win, 33, 1L << 17, close_win, cub.vars); //AQUI DA PAU, PQ??
 	
 
 
