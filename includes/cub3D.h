@@ -6,7 +6,7 @@
 /*   By: ebresser <ebresser@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 20:14:07 by ebresser          #+#    #+#             */
-/*   Updated: 2021/08/15 16:00:26 by ebresser         ###   ########.fr       */
+/*   Updated: 2021/08/15 17:33:01 by ebresser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct	s_cub
 {
 	t_vars			*vars; //map & file
 	t_data			*img;
+	t_data			*img2;
 }				t_cub;
 
 int	create_trgb(int t, int r, int g, int b);

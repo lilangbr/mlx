@@ -6,7 +6,7 @@
 /*   By: ebresser <ebresser@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 20:12:37 by ebresser          #+#    #+#             */
-/*   Updated: 2021/08/15 15:58:45 by ebresser         ###   ########.fr       */
+/*   Updated: 2021/08/15 17:34:19 by ebresser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@ static void	vars_in_heap(t_cub *cub)
 static void	img_in_heap(t_cub *cub)
 {
 	cub->img = ft_calloc(1, (sizeof(t_data) + 1)); //cub ja eh um endereço, já declarei. img ainda n é
+	//dou a ele um endereço q aponta para uma struct. +1 -> shadow bytes
+	if (cub->img == NULL)
+		exit(1);
+}
+
+static void	img2_in_heap(t_cub *cub)
+{
+	cub->img2 = ft_calloc(1, (sizeof(t_data) + 1)); //cub ja eh um endereço, já declarei. img ainda n é
 	//dou a ele um endereço q aponta para uma struct. +1 -> shadow bytes
 	if (cub->img == NULL)
 		exit(1);
@@ -100,6 +108,10 @@ int	main(void)
 	cub.img->img = NULL;
 	cub.img->addr = NULL;
 
+	img2_in_heap(&cub);
+	cub.img2->img = NULL;
+	cub.img2->addr = NULL;
+
 	cub.vars->mlx = mlx_init(); //init dele alocar	
 
 	//new_frame(&cub);
@@ -138,6 +150,10 @@ int	main(void)
 	free(cub.img->img);
 	free(cub.img->addr);
 	free(cub.img);
+
+	free(cub.img2->img);
+	free(cub.img2->addr);
+	free(cub.img2);
 }
 
 /* Guardar no coração:
