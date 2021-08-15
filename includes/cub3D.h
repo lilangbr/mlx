@@ -6,7 +6,7 @@
 /*   By: ebresser <ebresser@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 20:14:07 by ebresser          #+#    #+#             */
-/*   Updated: 2021/08/14 21:50:57 by ebresser         ###   ########.fr       */
+/*   Updated: 2021/08/15 16:00:26 by ebresser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void draw_square2 (t_data *img);
 void draw_triangle (t_data *img);
 void draw_opposite (t_data *img);
 int	key_hook(int keycode, t_vars *vars);
+int close_win(t_cub *cub);
+int new_frame(t_cub *cub);
 
 
 
