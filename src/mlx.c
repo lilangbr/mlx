@@ -6,7 +6,7 @@
 /*   By: ebresser <ebresser@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/28 20:12:37 by ebresser          #+#    #+#             */
-/*   Updated: 2021/08/14 21:15:41 by ebresser         ###   ########.fr       */
+/*   Updated: 2021/08/14 21:26:21 by ebresser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,7 @@ int	main(void)
 	//mlx_key_hook(cub.vars->win, key_hook, &(cub.vars)); //função no arg é chamada sempre 
 	//que um evento é disparado. corrigir minim/maximiz com mlx_loop_hook(atualiza a tela)
 	
-	//PAULA
-	//mlx_hook(cub.vars->win, 2, 1L << 0, key_pressed, cub);
-	//mlx_hook(ponteiro_para_janela, numero, máscara, função_para_chamar_quando_coisa_da_mascara_acontecer, parametro_para_enviar_pra_função);
+	
 	//mlx_hook(cub->window_ptr, 2, 1L << 0, key_pressed, cub);
 	//mlx_hook(cub->window_ptr, 3, 1L << 1, key_released, cub);
 	mlx_hook(cub.vars->win, 2, 1L << 0, key_pressed, cub.vars); //instead of calling mlx_key_hook, 
