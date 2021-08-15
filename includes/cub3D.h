@@ -6,7 +6,7 @@
 /*   By: ebresser <ebresser@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/25 20:14:07 by ebresser          #+#    #+#             */
-/*   Updated: 2021/08/14 19:40:22 by ebresser         ###   ########.fr       */
+/*   Updated: 2021/08/14 21:50:57 by ebresser         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 # include <errno.h>
 
 # define ESC_KEY 0x00ff1b
+# define W_KEY 0x0077
+# define S_KEY 0x0073
+# define A_KEY 0x0061
+# define D_KEY 0x0064
+# define RIGHT_KEY 0x00ff53
+# define LEFT_KEY 0x00ff51
 
 typedef struct	s_vars {
 	void	*mlx;
